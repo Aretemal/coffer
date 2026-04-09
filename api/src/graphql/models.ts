@@ -274,3 +274,35 @@ export class CreateBudgetPlanInput {
   @Field({ nullable: true }) description?: string;
   @Field(() => [BudgetAllocationInput]) allocations: BudgetAllocationInput[];
 }
+
+@ObjectType()
+export class ItemListRowGql {
+  @Field(() => ID) id: string;
+  @Field() text: string;
+  @Field(() => Int) sortOrder: number;
+  @Field(() => ID) listId: string;
+}
+
+@ObjectType()
+export class ItemListGql {
+  @Field(() => ID) id: string;
+  @Field() name: string;
+  @Field(() => [ItemListRowGql]) rows: ItemListRowGql[];
+}
+
+@InputType()
+export class CreateItemListInput {
+  @Field() name: string;
+}
+
+@InputType()
+export class RenameItemListInput {
+  @Field(() => ID) id: string;
+  @Field() name: string;
+}
+
+@InputType()
+export class AddItemListRowInput {
+  @Field(() => ID) listId: string;
+  @Field() text: string;
+}

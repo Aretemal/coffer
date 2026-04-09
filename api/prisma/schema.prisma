@@ -24,6 +24,7 @@ model User {
   monthlyIncomePlans   MonthlyIncomePlan[]
   weeklyExpensePlans   WeeklyExpensePlan[]
   learningActivities   LearningActivity[]
+  itemLists            ItemList[]
 }
 
 model Category {
@@ -185,4 +186,26 @@ model BudgetAllocation {
   categoryId    String?
   budgetPlan    BudgetPlan @relation(fields: [budgetPlanId], references: [id], onDelete: Cascade)
   category      Category?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+}
+
+model ItemList {
+  id        String        @id @default(cuid())
+  name      String
+  userId    String
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rows      ItemListRow[]
+  createdAt DateTime      @default(now())
+
+  @@index([userId, createdAt])
+}
+
+model ItemListRow {
+  id        String   @id @default(cuid())
+  text      String
+  sortOrder Int      @default(0)
+  listId    String
+  list      ItemList @relation(fields: [listId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([listId, sortOrder])
 }

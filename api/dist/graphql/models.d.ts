@@ -203,3 +203,25 @@ export declare class CreateBudgetPlanInput {
     description?: string;
     allocations: BudgetAllocationInput[];
 }
+export declare class ItemListRowGql {
+    id: string;
+    text: string;
+    sortOrder: number;
+    listId: string;
+}
+export declare class ItemListGql {
+    id: string;
+    name: string;
+    rows: ItemListRowGql[];
+}
+export declare class CreateItemListInput {
+    name: string;
+}
+export declare class RenameItemListInput {
+    id: string;
+    name: string;
+}
+export declare class AddItemListRowInput {
+    listId: string;
+    text: string;
+}

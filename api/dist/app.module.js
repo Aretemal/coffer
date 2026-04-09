@@ -16,6 +16,7 @@ const auth_module_1 = require("./auth/auth.module");
 const graphql_enums_1 = require("./common/graphql-enums");
 const kafka_module_1 = require("./kafka/kafka.module");
 const learning_module_1 = require("./learning/learning.module");
+const lists_module_1 = require("./lists/lists.module");
 const money_module_1 = require("./money/money.module");
 const notifications_module_1 = require("./notifications/notifications.module");
 const planner_module_1 = require("./planner/planner.module");
@@ -45,6 +46,7 @@ exports.AppModule = AppModule = __decorate([
             planner_module_1.PlannerModule,
             notifications_module_1.NotificationsModule,
             learning_module_1.LearningModule,
+            lists_module_1.ListsModule,
         ],
     })
 ], AppModule);

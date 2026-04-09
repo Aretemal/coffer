@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { registerGraphqlEnums } from './common/graphql-enums';
 import { KafkaModule } from './kafka/kafka.module';
 import { LearningModule } from './learning/learning.module';
+import { ListsModule } from './lists/lists.module';
 import { MoneyModule } from './money/money.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { PlannerModule } from './planner/planner.module';
@@ -34,6 +35,7 @@ registerGraphqlEnums();
     PlannerModule,
     NotificationsModule,
     LearningModule,
+    ListsModule,
   ],
 })
 export class AppModule {}

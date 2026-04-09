@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateBudgetPlanInput = exports.BudgetAllocationInput = exports.BudgetPlanGql = exports.BudgetAllocationGql = exports.CreateTodoInput = exports.TodoGql = exports.CreateReminderInput = exports.ReminderGql = exports.UpdateLearningSlotInput = exports.CreateLearningSlotInput = exports.CreateLearningActivityInput = exports.LearningActivityGql = exports.LearningSlotGql = exports.EventNotificationGql = exports.SetWeeklyExpensePlanInput = exports.WeeklyExpensePlanGql = exports.SetMonthlyIncomePlanInput = exports.MonthlyIncomePlanGql = exports.UpdateAccountInput = exports.CreateAccountInput = exports.AccountGql = exports.UpdateCalendarEventInput = exports.CreateCalendarEventInput = exports.CalendarEventGql = exports.MoneySummaryGql = exports.CreateTransactionInput = exports.TransactionGql = exports.CreateCategoryInput = exports.CategoryGql = exports.LoginInput = exports.RegisterInput = exports.AuthPayload = exports.UserGql = void 0;
+exports.AddItemListRowInput = exports.RenameItemListInput = exports.CreateItemListInput = exports.ItemListGql = exports.ItemListRowGql = exports.CreateBudgetPlanInput = exports.BudgetAllocationInput = exports.BudgetPlanGql = exports.BudgetAllocationGql = exports.CreateTodoInput = exports.TodoGql = exports.CreateReminderInput = exports.ReminderGql = exports.UpdateLearningSlotInput = exports.CreateLearningSlotInput = exports.CreateLearningActivityInput = exports.LearningActivityGql = exports.LearningSlotGql = exports.EventNotificationGql = exports.SetWeeklyExpensePlanInput = exports.WeeklyExpensePlanGql = exports.SetMonthlyIncomePlanInput = exports.MonthlyIncomePlanGql = exports.UpdateAccountInput = exports.CreateAccountInput = exports.AccountGql = exports.UpdateCalendarEventInput = exports.CreateCalendarEventInput = exports.CalendarEventGql = exports.MoneySummaryGql = exports.CreateTransactionInput = exports.TransactionGql = exports.CreateCategoryInput = exports.CategoryGql = exports.LoginInput = exports.RegisterInput = exports.AuthPayload = exports.UserGql = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const client_1 = require("@prisma/client");
 const graphql_enums_1 = require("../common/graphql-enums");
@@ -759,4 +759,82 @@ __decorate([
 exports.CreateBudgetPlanInput = CreateBudgetPlanInput = __decorate([
     (0, graphql_1.InputType)()
 ], CreateBudgetPlanInput);
+let ItemListRowGql = class ItemListRowGql {
+};
+exports.ItemListRowGql = ItemListRowGql;
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.ID),
+    __metadata("design:type", String)
+], ItemListRowGql.prototype, "id", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
+], ItemListRowGql.prototype, "text", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int),
+    __metadata("design:type", Number)
+], ItemListRowGql.prototype, "sortOrder", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.ID),
+    __metadata("design:type", String)
+], ItemListRowGql.prototype, "listId", void 0);
+exports.ItemListRowGql = ItemListRowGql = __decorate([
+    (0, graphql_1.ObjectType)()
+], ItemListRowGql);
+let ItemListGql = class ItemListGql {
+};
+exports.ItemListGql = ItemListGql;
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.ID),
+    __metadata("design:type", String)
+], ItemListGql.prototype, "id", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
+], ItemListGql.prototype, "name", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => [ItemListRowGql]),
+    __metadata("design:type", Array)
+], ItemListGql.prototype, "rows", void 0);
+exports.ItemListGql = ItemListGql = __decorate([
+    (0, graphql_1.ObjectType)()
+], ItemListGql);
+let CreateItemListInput = class CreateItemListInput {
+};
+exports.CreateItemListInput = CreateItemListInput;
+__decorate([
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
+], CreateItemListInput.prototype, "name", void 0);
+exports.CreateItemListInput = CreateItemListInput = __decorate([
+    (0, graphql_1.InputType)()
+], CreateItemListInput);
+let RenameItemListInput = class RenameItemListInput {
+};
+exports.RenameItemListInput = RenameItemListInput;
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.ID),
+    __metadata("design:type", String)
+], RenameItemListInput.prototype, "id", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
+], RenameItemListInput.prototype, "name", void 0);
+exports.RenameItemListInput = RenameItemListInput = __decorate([
+    (0, graphql_1.InputType)()
+], RenameItemListInput);
+let AddItemListRowInput = class AddItemListRowInput {
+};
+exports.AddItemListRowInput = AddItemListRowInput;
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.ID),
+    __metadata("design:type", String)
+], AddItemListRowInput.prototype, "listId", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
+], AddItemListRowInput.prototype, "text", void 0);
+exports.AddItemListRowInput = AddItemListRowInput = __decorate([
+    (0, graphql_1.InputType)()
+], AddItemListRowInput);
 //# sourceMappingURL=models.js.map
