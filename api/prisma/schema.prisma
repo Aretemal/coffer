@@ -1,0 +1,188 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime @default(now())
+
+  transactions         Transaction[]
+  categories           Category[]
+  calendarEvents       CalendarEvent[]
+  reminders            Reminder[]
+  todos                Todo[]
+  budgetPlans          BudgetPlan[]
+  accounts             Account[]
+  monthlyIncomePlans   MonthlyIncomePlan[]
+  weeklyExpensePlans   WeeklyExpensePlan[]
+  learningActivities   LearningActivity[]
+}
+
+model Category {
+  id     String @id @default(cuid())
+  name   String
+  color  String @default("#6366f1")
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  transactions        Transaction[]
+  budgetAllocations   BudgetAllocation[]
+
+  @@index([userId])
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+model Transaction {
+  id         String          @id @default(cuid())
+  amount     Decimal         @db.Decimal(14, 2)
+  type       TransactionType
+  occurredAt DateTime
+  note       String?
+  userId     String
+  categoryId String?
+  user       User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category   Category?       @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  createdAt  DateTime        @default(now())
+
+  @@index([userId, occurredAt])
+}
+
+model CalendarEvent {
+  id                 String    @id @default(cuid())
+  title              String
+  startsAt           DateTime
+  endsAt             DateTime?
+  allDay             Boolean   @default(false)
+  notifyDayBefore    Boolean   @default(false)
+  notifyWeekBefore   Boolean   @default(false)
+  userId             String
+  user               User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, startsAt])
+}
+
+model Account {
+  id        String   @id @default(cuid())
+  name      String
+  balance   Decimal  @db.Decimal(14, 2)
+  currency  String   @default("RUB")
+  sortOrder Int      @default(0)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, sortOrder])
+}
+
+model MonthlyIncomePlan {
+  id            String  @id @default(cuid())
+  userId        String
+  year          Int
+  month         Int
+  plannedAmount Decimal @db.Decimal(14, 2)
+  user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, year, month])
+}
+
+model WeeklyExpensePlan {
+  id            String   @id @default(cuid())
+  userId        String
+  weekStart     DateTime @db.Date
+  plannedAmount Decimal  @db.Decimal(14, 2)
+  note          String?
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, weekStart])
+}
+
+enum LearningKind {
+  BOOK
+  COURSE
+  OTHER
+}
+
+model LearningActivity {
+  id     String         @id @default(cuid())
+  title  String
+  kind   LearningKind   @default(OTHER)
+  color  String         @default("#a78bfa")
+  userId String
+  user   User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  slots  LearningSlot[]
+
+  @@index([userId])
+}
+
+model LearningSlot {
+  id         String           @id @default(cuid())
+  startDate  DateTime         @db.Date
+  endDate    DateTime         @db.Date
+  note       String?
+  activityId String
+  activity   LearningActivity @relation(fields: [activityId], references: [id], onDelete: Cascade)
+
+  @@index([activityId, startDate])
+}
+
+model Reminder {
+  id        String   @id @default(cuid())
+  title     String
+  dueAt     DateTime
+  completed Boolean  @default(false)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, dueAt])
+}
+
+model Todo {
+  id       String    @id @default(cuid())
+  title    String
+  done     Boolean   @default(false)
+  dueAt    DateTime?
+  priority Int       @default(0)
+  userId   String
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+enum BudgetPeriodType {
+  WEEK
+  MONTH
+}
+
+model BudgetPlan {
+  id          String           @id @default(cuid())
+  type        BudgetPeriodType
+  startDate   DateTime         @db.Date
+  endDate     DateTime         @db.Date
+  description String?
+  userId      String
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  allocations BudgetAllocation[]
+
+  @@index([userId, startDate])
+}
+
+model BudgetAllocation {
+  id            String     @id @default(cuid())
+  plannedAmount Decimal    @db.Decimal(14, 2)
+  note          String?
+  budgetPlanId  String
+  categoryId    String?
+  budgetPlan    BudgetPlan @relation(fields: [budgetPlanId], references: [id], onDelete: Cascade)
+  category      Category?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+}
