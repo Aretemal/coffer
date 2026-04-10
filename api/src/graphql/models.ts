@@ -1,16 +1,25 @@
-import { Field, Float, ID, InputType, Int, ObjectType } from '@nestjs/graphql';
+import {
+  Field,
+  Float,
+  GraphQLISODateTime,
+  ID,
+  InputType,
+  Int,
+  ObjectType,
+} from '@nestjs/graphql';
 import {
   BudgetPeriodType,
   LearningKind,
   TransactionType,
 } from '@prisma/client';
 import { NotificationTiming } from '../common/graphql-enums';
+import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
 
 @ObjectType()
 export class UserGql {
   @Field(() => ID) id: string;
   @Field() email: string;
-  @Field({ nullable: true }) name?: string | null;
+  @Field(() => String, { nullable: true }) name?: string | null;
 }
 
 @ObjectType()
@@ -21,15 +30,31 @@ export class AuthPayload {
 
 @InputType()
 export class RegisterInput {
-  @Field() email: string;
-  @Field() password: string;
-  @Field({ nullable: true }) name?: string;
+  @Field()
+  @IsEmail()
+  email: string;
+
+  @Field()
+  @IsString()
+  @MinLength(6)
+  password: string;
+
+  @Field(() => String, { nullable: true })
+  @IsOptional()
+  @IsString()
+  name?: string;
 }
 
 @InputType()
 export class LoginInput {
-  @Field() email: string;
-  @Field() password: string;
+  @Field()
+  @IsEmail()
+  email: string;
+
+  @Field()
+  @IsString()
+  @MinLength(1)
+  password: string;
 }
 
 @ObjectType()
@@ -51,7 +76,7 @@ export class TransactionGql {
   @Field(() => Float) amount: number;
   @Field(() => TransactionType) type: TransactionType;
   @Field() occurredAt: Date;
-  @Field({ nullable: true }) note?: string | null;
+  @Field(() => String, { nullable: true }) note?: string | null;
   @Field(() => ID, { nullable: true }) categoryId?: string | null;
 }
 
@@ -60,8 +85,8 @@ export class CreateTransactionInput {
   @Field(() => Float) amount: number;
   @Field(() => TransactionType) type: TransactionType;
   @Field() occurredAt: Date;
-  @Field({ nullable: true }) note?: string;
-  @Field({ nullable: true }) categoryId?: string;
+  @Field(() => String, { nullable: true }) note?: string;
+  @Field(() => ID, { nullable: true }) categoryId?: string;
 }
 
 @ObjectType()
@@ -77,7 +102,7 @@ export class CalendarEventGql {
   @Field(() => ID) id: string;
   @Field() title: string;
   @Field() startsAt: Date;
-  @Field({ nullable: true }) endsAt?: Date | null;
+  @Field(() => GraphQLISODateTime, { nullable: true }) endsAt?: Date | null;
   @Field() allDay: boolean;
   @Field() notifyDayBefore: boolean;
   @Field() notifyWeekBefore: boolean;
@@ -87,7 +112,7 @@ export class CalendarEventGql {
 export class CreateCalendarEventInput {
   @Field() title: string;
   @Field() startsAt: Date;
-  @Field({ nullable: true }) endsAt?: Date;
+  @Field(() => GraphQLISODateTime, { nullable: true }) endsAt?: Date;
   @Field({ defaultValue: false }) allDay: boolean;
   @Field({ defaultValue: false }) notifyDayBefore: boolean;
   @Field({ defaultValue: false }) notifyWeekBefore: boolean;
@@ -96,12 +121,12 @@ export class CreateCalendarEventInput {
 @InputType()
 export class UpdateCalendarEventInput {
   @Field(() => ID) id: string;
-  @Field({ nullable: true }) title?: string;
-  @Field({ nullable: true }) startsAt?: Date;
-  @Field({ nullable: true }) endsAt?: Date;
-  @Field({ nullable: true }) allDay?: boolean;
-  @Field({ nullable: true }) notifyDayBefore?: boolean;
-  @Field({ nullable: true }) notifyWeekBefore?: boolean;
+  @Field(() => String, { nullable: true }) title?: string;
+  @Field(() => GraphQLISODateTime, { nullable: true }) startsAt?: Date;
+  @Field(() => GraphQLISODateTime, { nullable: true }) endsAt?: Date;
+  @Field(() => Boolean, { nullable: true }) allDay?: boolean;
+  @Field(() => Boolean, { nullable: true }) notifyDayBefore?: boolean;
+  @Field(() => Boolean, { nullable: true }) notifyWeekBefore?: boolean;
 }
 
 @ObjectType()
@@ -123,9 +148,9 @@ export class CreateAccountInput {
 @InputType()
 export class UpdateAccountInput {
   @Field(() => ID) id: string;
-  @Field({ nullable: true }) name?: string;
+  @Field(() => String, { nullable: true }) name?: string;
   @Field(() => Float, { nullable: true }) balance?: number;
-  @Field({ nullable: true }) currency?: string;
+  @Field(() => String, { nullable: true }) currency?: string;
   @Field(() => Int, { nullable: true }) sortOrder?: number;
 }
 
@@ -149,14 +174,14 @@ export class WeeklyExpensePlanGql {
   @Field(() => ID) id: string;
   @Field() weekStart: Date;
   @Field(() => Float) plannedAmount: number;
-  @Field({ nullable: true }) note?: string | null;
+  @Field(() => String, { nullable: true }) note?: string | null;
 }
 
 @InputType()
 export class SetWeeklyExpensePlanInput {
   @Field() weekStart: Date;
   @Field(() => Float) plannedAmount: number;
-  @Field({ nullable: true }) note?: string;
+  @Field(() => String, { nullable: true }) note?: string;
 }
 
 @ObjectType()
@@ -175,7 +200,7 @@ export class LearningSlotGql {
   @Field(() => ID) id: string;
   @Field() startDate: Date;
   @Field() endDate: Date;
-  @Field({ nullable: true }) note?: string | null;
+  @Field(() => String, { nullable: true }) note?: string | null;
   @Field(() => ID) activityId: string;
 }
 
@@ -192,7 +217,7 @@ export class LearningActivityGql {
 export class CreateLearningActivityInput {
   @Field() title: string;
   @Field(() => LearningKind, { nullable: true }) kind?: LearningKind;
-  @Field({ nullable: true }) color?: string;
+  @Field(() => String, { nullable: true }) color?: string;
 }
 
 @InputType()
@@ -200,15 +225,15 @@ export class CreateLearningSlotInput {
   @Field(() => ID) activityId: string;
   @Field() startDate: Date;
   @Field() endDate: Date;
-  @Field({ nullable: true }) note?: string;
+  @Field(() => String, { nullable: true }) note?: string;
 }
 
 @InputType()
 export class UpdateLearningSlotInput {
   @Field(() => ID) id: string;
-  @Field({ nullable: true }) startDate?: Date;
-  @Field({ nullable: true }) endDate?: Date;
-  @Field({ nullable: true }) note?: string;
+  @Field(() => GraphQLISODateTime, { nullable: true }) startDate?: Date;
+  @Field(() => GraphQLISODateTime, { nullable: true }) endDate?: Date;
+  @Field(() => String, { nullable: true }) note?: string;
 }
 
 @ObjectType()
@@ -230,14 +255,14 @@ export class TodoGql {
   @Field(() => ID) id: string;
   @Field() title: string;
   @Field() done: boolean;
-  @Field({ nullable: true }) dueAt?: Date | null;
+  @Field(() => GraphQLISODateTime, { nullable: true }) dueAt?: Date | null;
   @Field() priority: number;
 }
 
 @InputType()
 export class CreateTodoInput {
   @Field() title: string;
-  @Field({ nullable: true }) dueAt?: Date;
+  @Field(() => GraphQLISODateTime, { nullable: true }) dueAt?: Date;
   @Field({ defaultValue: 0 }) priority: number;
 }
 
@@ -245,7 +270,7 @@ export class CreateTodoInput {
 export class BudgetAllocationGql {
   @Field(() => ID) id: string;
   @Field(() => Float) plannedAmount: number;
-  @Field({ nullable: true }) note?: string | null;
+  @Field(() => String, { nullable: true }) note?: string | null;
   @Field(() => ID, { nullable: true }) categoryId?: string | null;
 }
 
@@ -255,15 +280,15 @@ export class BudgetPlanGql {
   @Field(() => BudgetPeriodType) type: BudgetPeriodType;
   @Field() startDate: Date;
   @Field() endDate: Date;
-  @Field({ nullable: true }) description?: string | null;
+  @Field(() => String, { nullable: true }) description?: string | null;
   @Field(() => [BudgetAllocationGql]) allocations: BudgetAllocationGql[];
 }
 
 @InputType()
 export class BudgetAllocationInput {
   @Field(() => Float) plannedAmount: number;
-  @Field({ nullable: true }) note?: string;
-  @Field({ nullable: true }) categoryId?: string;
+  @Field(() => String, { nullable: true }) note?: string;
+  @Field(() => ID, { nullable: true }) categoryId?: string;
 }
 
 @InputType()
@@ -271,7 +296,7 @@ export class CreateBudgetPlanInput {
   @Field(() => BudgetPeriodType) type: BudgetPeriodType;
   @Field() startDate: Date;
   @Field() endDate: Date;
-  @Field({ nullable: true }) description?: string;
+  @Field(() => String, { nullable: true }) description?: string;
   @Field(() => [BudgetAllocationInput]) allocations: BudgetAllocationInput[];
 }
 

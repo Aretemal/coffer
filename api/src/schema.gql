@@ -1,0 +1,345 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AccountGql {
+  balance: Float!
+  currency: String!
+  id: ID!
+  name: String!
+  sortOrder: Int!
+}
+
+input AddItemListRowInput {
+  listId: ID!
+  text: String!
+}
+
+type AuthPayload {
+  accessToken: String!
+  user: UserGql!
+}
+
+type BudgetAllocationGql {
+  categoryId: ID
+  id: ID!
+  note: String
+  plannedAmount: Float!
+}
+
+input BudgetAllocationInput {
+  categoryId: ID
+  note: String
+  plannedAmount: Float!
+}
+
+enum BudgetPeriodType {
+  MONTH
+  WEEK
+}
+
+type BudgetPlanGql {
+  allocations: [BudgetAllocationGql!]!
+  description: String
+  endDate: DateTime!
+  id: ID!
+  startDate: DateTime!
+  type: BudgetPeriodType!
+}
+
+type CalendarEventGql {
+  allDay: Boolean!
+  endsAt: DateTime
+  id: ID!
+  notifyDayBefore: Boolean!
+  notifyWeekBefore: Boolean!
+  startsAt: DateTime!
+  title: String!
+}
+
+type CategoryGql {
+  color: String!
+  id: ID!
+  name: String!
+}
+
+input CreateAccountInput {
+  balance: Float!
+  currency: String! = "RUB"
+  name: String!
+}
+
+input CreateBudgetPlanInput {
+  allocations: [BudgetAllocationInput!]!
+  description: String
+  endDate: DateTime!
+  startDate: DateTime!
+  type: BudgetPeriodType!
+}
+
+input CreateCalendarEventInput {
+  allDay: Boolean! = false
+  endsAt: DateTime
+  notifyDayBefore: Boolean! = false
+  notifyWeekBefore: Boolean! = false
+  startsAt: DateTime!
+  title: String!
+}
+
+input CreateCategoryInput {
+  color: String! = "#6366f1"
+  name: String!
+}
+
+input CreateItemListInput {
+  name: String!
+}
+
+input CreateLearningActivityInput {
+  color: String
+  kind: LearningKind
+  title: String!
+}
+
+input CreateLearningSlotInput {
+  activityId: ID!
+  endDate: DateTime!
+  note: String
+  startDate: DateTime!
+}
+
+input CreateReminderInput {
+  dueAt: DateTime!
+  title: String!
+}
+
+input CreateTodoInput {
+  dueAt: DateTime
+  priority: Float! = 0
+  title: String!
+}
+
+input CreateTransactionInput {
+  amount: Float!
+  categoryId: ID
+  note: String
+  occurredAt: DateTime!
+  type: TransactionType!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type EventNotificationGql {
+  eventId: ID!
+  eventStartsAt: DateTime!
+  fireAt: DateTime!
+  id: ID!
+  message: String!
+  timing: NotificationTiming!
+  title: String!
+}
+
+type ItemListGql {
+  id: ID!
+  name: String!
+  rows: [ItemListRowGql!]!
+}
+
+type ItemListRowGql {
+  id: ID!
+  listId: ID!
+  sortOrder: Int!
+  text: String!
+}
+
+type LearningActivityGql {
+  color: String!
+  id: ID!
+  kind: LearningKind!
+  slots: [LearningSlotGql!]!
+  title: String!
+}
+
+enum LearningKind {
+  BOOK
+  COURSE
+  OTHER
+}
+
+type LearningSlotGql {
+  activityId: ID!
+  endDate: DateTime!
+  id: ID!
+  note: String
+  startDate: DateTime!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type MoneySummaryGql {
+  expense: Float!
+  income: Float!
+  periodEnd: DateTime!
+  periodStart: DateTime!
+}
+
+type MonthlyIncomePlanGql {
+  id: ID!
+  month: Int!
+  plannedAmount: Float!
+  year: Int!
+}
+
+type Mutation {
+  addItemListRow(input: AddItemListRowInput!): ItemListRowGql!
+  createAccount(input: CreateAccountInput!): AccountGql!
+  createBudgetPlan(input: CreateBudgetPlanInput!): BudgetPlanGql!
+  createCalendarEvent(input: CreateCalendarEventInput!): CalendarEventGql!
+  createCategory(input: CreateCategoryInput!): CategoryGql!
+  createItemList(input: CreateItemListInput!): ItemListGql!
+  createLearningActivity(input: CreateLearningActivityInput!): LearningActivityGql!
+  createLearningSlot(input: CreateLearningSlotInput!): LearningSlotGql!
+  createReminder(input: CreateReminderInput!): ReminderGql!
+  createTodo(input: CreateTodoInput!): TodoGql!
+  createTransaction(input: CreateTransactionInput!): TransactionGql!
+  deleteAccount(id: ID!): Boolean!
+  deleteBudgetPlan(id: ID!): Boolean!
+  deleteCalendarEvent(id: ID!): Boolean!
+  deleteCategory(id: ID!): Boolean!
+  deleteItemList(id: ID!): Boolean!
+  deleteItemListRow(id: ID!): Boolean!
+  deleteLearningActivity(id: ID!): Boolean!
+  deleteLearningSlot(id: ID!): Boolean!
+  deleteReminder(id: ID!): Boolean!
+  deleteTodo(id: ID!): Boolean!
+  deleteTransaction(id: ID!): Boolean!
+  login(input: LoginInput!): AuthPayload!
+  register(input: RegisterInput!): AuthPayload!
+  renameItemList(input: RenameItemListInput!): ItemListGql!
+  setMonthlyIncomePlan(input: SetMonthlyIncomePlanInput!): MonthlyIncomePlanGql!
+  setWeeklyExpensePlan(input: SetWeeklyExpensePlanInput!): WeeklyExpensePlanGql!
+  toggleReminder(id: ID!): ReminderGql!
+  toggleTodo(id: ID!): TodoGql!
+  updateAccount(input: UpdateAccountInput!): AccountGql!
+  updateCalendarEvent(input: UpdateCalendarEventInput!): CalendarEventGql!
+  updateLearningSlot(input: UpdateLearningSlotInput!): LearningSlotGql!
+}
+
+enum NotificationTiming {
+  DAY_BEFORE
+  WEEK_BEFORE
+}
+
+type Query {
+  accounts: [AccountGql!]!
+  budgetPlans: [BudgetPlanGql!]!
+  calendarEvents(from: DateTime!, to: DateTime!): [CalendarEventGql!]!
+  categories: [CategoryGql!]!
+  itemLists: [ItemListGql!]!
+  learningActivities(from: DateTime, to: DateTime): [LearningActivityGql!]!
+  me: UserGql!
+  moneySummary(month: Int, year: Int): MoneySummaryGql!
+  monthlyIncomePlans(year: Int!): [MonthlyIncomePlanGql!]!
+  notificationFiresInRange(from: DateTime!, to: DateTime!): [EventNotificationGql!]!
+  reminders: [ReminderGql!]!
+  todayEventNotifications: [EventNotificationGql!]!
+  todos: [TodoGql!]!
+  transactions(from: DateTime, to: DateTime): [TransactionGql!]!
+  weeklyExpensePlansForYear(year: Int!): [WeeklyExpensePlanGql!]!
+}
+
+input RegisterInput {
+  email: String!
+  name: String
+  password: String!
+}
+
+type ReminderGql {
+  completed: Boolean!
+  dueAt: DateTime!
+  id: ID!
+  title: String!
+}
+
+input RenameItemListInput {
+  id: ID!
+  name: String!
+}
+
+input SetMonthlyIncomePlanInput {
+  month: Int!
+  plannedAmount: Float!
+  year: Int!
+}
+
+input SetWeeklyExpensePlanInput {
+  note: String
+  plannedAmount: Float!
+  weekStart: DateTime!
+}
+
+type TodoGql {
+  done: Boolean!
+  dueAt: DateTime
+  id: ID!
+  priority: Float!
+  title: String!
+}
+
+type TransactionGql {
+  amount: Float!
+  categoryId: ID
+  id: ID!
+  note: String
+  occurredAt: DateTime!
+  type: TransactionType!
+}
+
+enum TransactionType {
+  EXPENSE
+  INCOME
+}
+
+input UpdateAccountInput {
+  balance: Float
+  currency: String
+  id: ID!
+  name: String
+  sortOrder: Int
+}
+
+input UpdateCalendarEventInput {
+  allDay: Boolean
+  endsAt: DateTime
+  id: ID!
+  notifyDayBefore: Boolean
+  notifyWeekBefore: Boolean
+  startsAt: DateTime
+  title: String
+}
+
+input UpdateLearningSlotInput {
+  endDate: DateTime
+  id: ID!
+  note: String
+  startDate: DateTime
+}
+
+type UserGql {
+  email: String!
+  id: ID!
+  name: String
+}
+
+type WeeklyExpensePlanGql {
+  id: ID!
+  note: String
+  plannedAmount: Float!
+  weekStart: DateTime!
+}

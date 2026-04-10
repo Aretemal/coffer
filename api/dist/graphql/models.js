@@ -13,6 +13,7 @@ exports.AddItemListRowInput = exports.RenameItemListInput = exports.CreateItemLi
 const graphql_1 = require("@nestjs/graphql");
 const client_1 = require("@prisma/client");
 const graphql_enums_1 = require("../common/graphql-enums");
+const class_validator_1 = require("class-validator");
 let UserGql = class UserGql {
 };
 exports.UserGql = UserGql;
@@ -25,7 +26,7 @@ __decorate([
     __metadata("design:type", String)
 ], UserGql.prototype, "email", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", Object)
 ], UserGql.prototype, "name", void 0);
 exports.UserGql = UserGql = __decorate([
@@ -50,14 +51,19 @@ let RegisterInput = class RegisterInput {
 exports.RegisterInput = RegisterInput;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
 ], RegisterInput.prototype, "email", void 0);
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MinLength)(6),
     __metadata("design:type", String)
 ], RegisterInput.prototype, "password", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], RegisterInput.prototype, "name", void 0);
 exports.RegisterInput = RegisterInput = __decorate([
@@ -68,10 +74,13 @@ let LoginInput = class LoginInput {
 exports.LoginInput = LoginInput;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
 ], LoginInput.prototype, "email", void 0);
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MinLength)(1),
     __metadata("design:type", String)
 ], LoginInput.prototype, "password", void 0);
 exports.LoginInput = LoginInput = __decorate([
@@ -129,7 +138,7 @@ __decorate([
     __metadata("design:type", Date)
 ], TransactionGql.prototype, "occurredAt", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", Object)
 ], TransactionGql.prototype, "note", void 0);
 __decorate([
@@ -155,11 +164,11 @@ __decorate([
     __metadata("design:type", Date)
 ], CreateTransactionInput.prototype, "occurredAt", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], CreateTransactionInput.prototype, "note", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => graphql_1.ID, { nullable: true }),
     __metadata("design:type", String)
 ], CreateTransactionInput.prototype, "categoryId", void 0);
 exports.CreateTransactionInput = CreateTransactionInput = __decorate([
@@ -203,7 +212,7 @@ __decorate([
     __metadata("design:type", Date)
 ], CalendarEventGql.prototype, "startsAt", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => graphql_1.GraphQLISODateTime, { nullable: true }),
     __metadata("design:type", Object)
 ], CalendarEventGql.prototype, "endsAt", void 0);
 __decorate([
@@ -233,7 +242,7 @@ __decorate([
     __metadata("design:type", Date)
 ], CreateCalendarEventInput.prototype, "startsAt", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => graphql_1.GraphQLISODateTime, { nullable: true }),
     __metadata("design:type", Date)
 ], CreateCalendarEventInput.prototype, "endsAt", void 0);
 __decorate([
@@ -259,27 +268,27 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateCalendarEventInput.prototype, "id", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], UpdateCalendarEventInput.prototype, "title", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => graphql_1.GraphQLISODateTime, { nullable: true }),
     __metadata("design:type", Date)
 ], UpdateCalendarEventInput.prototype, "startsAt", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => graphql_1.GraphQLISODateTime, { nullable: true }),
     __metadata("design:type", Date)
 ], UpdateCalendarEventInput.prototype, "endsAt", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => Boolean, { nullable: true }),
     __metadata("design:type", Boolean)
 ], UpdateCalendarEventInput.prototype, "allDay", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => Boolean, { nullable: true }),
     __metadata("design:type", Boolean)
 ], UpdateCalendarEventInput.prototype, "notifyDayBefore", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => Boolean, { nullable: true }),
     __metadata("design:type", Boolean)
 ], UpdateCalendarEventInput.prototype, "notifyWeekBefore", void 0);
 exports.UpdateCalendarEventInput = UpdateCalendarEventInput = __decorate([
@@ -337,7 +346,7 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateAccountInput.prototype, "id", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], UpdateAccountInput.prototype, "name", void 0);
 __decorate([
@@ -345,7 +354,7 @@ __decorate([
     __metadata("design:type", Number)
 ], UpdateAccountInput.prototype, "balance", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], UpdateAccountInput.prototype, "currency", void 0);
 __decorate([
@@ -411,7 +420,7 @@ __decorate([
     __metadata("design:type", Number)
 ], WeeklyExpensePlanGql.prototype, "plannedAmount", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", Object)
 ], WeeklyExpensePlanGql.prototype, "note", void 0);
 exports.WeeklyExpensePlanGql = WeeklyExpensePlanGql = __decorate([
@@ -429,7 +438,7 @@ __decorate([
     __metadata("design:type", Number)
 ], SetWeeklyExpensePlanInput.prototype, "plannedAmount", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], SetWeeklyExpensePlanInput.prototype, "note", void 0);
 exports.SetWeeklyExpensePlanInput = SetWeeklyExpensePlanInput = __decorate([
@@ -485,7 +494,7 @@ __decorate([
     __metadata("design:type", Date)
 ], LearningSlotGql.prototype, "endDate", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", Object)
 ], LearningSlotGql.prototype, "note", void 0);
 __decorate([
@@ -533,7 +542,7 @@ __decorate([
     __metadata("design:type", String)
 ], CreateLearningActivityInput.prototype, "kind", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], CreateLearningActivityInput.prototype, "color", void 0);
 exports.CreateLearningActivityInput = CreateLearningActivityInput = __decorate([
@@ -555,7 +564,7 @@ __decorate([
     __metadata("design:type", Date)
 ], CreateLearningSlotInput.prototype, "endDate", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], CreateLearningSlotInput.prototype, "note", void 0);
 exports.CreateLearningSlotInput = CreateLearningSlotInput = __decorate([
@@ -569,15 +578,15 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateLearningSlotInput.prototype, "id", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => graphql_1.GraphQLISODateTime, { nullable: true }),
     __metadata("design:type", Date)
 ], UpdateLearningSlotInput.prototype, "startDate", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => graphql_1.GraphQLISODateTime, { nullable: true }),
     __metadata("design:type", Date)
 ], UpdateLearningSlotInput.prototype, "endDate", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], UpdateLearningSlotInput.prototype, "note", void 0);
 exports.UpdateLearningSlotInput = UpdateLearningSlotInput = __decorate([
@@ -635,7 +644,7 @@ __decorate([
     __metadata("design:type", Boolean)
 ], TodoGql.prototype, "done", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => graphql_1.GraphQLISODateTime, { nullable: true }),
     __metadata("design:type", Object)
 ], TodoGql.prototype, "dueAt", void 0);
 __decorate([
@@ -653,7 +662,7 @@ __decorate([
     __metadata("design:type", String)
 ], CreateTodoInput.prototype, "title", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => graphql_1.GraphQLISODateTime, { nullable: true }),
     __metadata("design:type", Date)
 ], CreateTodoInput.prototype, "dueAt", void 0);
 __decorate([
@@ -675,7 +684,7 @@ __decorate([
     __metadata("design:type", Number)
 ], BudgetAllocationGql.prototype, "plannedAmount", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", Object)
 ], BudgetAllocationGql.prototype, "note", void 0);
 __decorate([
@@ -705,7 +714,7 @@ __decorate([
     __metadata("design:type", Date)
 ], BudgetPlanGql.prototype, "endDate", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", Object)
 ], BudgetPlanGql.prototype, "description", void 0);
 __decorate([
@@ -723,11 +732,11 @@ __decorate([
     __metadata("design:type", Number)
 ], BudgetAllocationInput.prototype, "plannedAmount", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], BudgetAllocationInput.prototype, "note", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => graphql_1.ID, { nullable: true }),
     __metadata("design:type", String)
 ], BudgetAllocationInput.prototype, "categoryId", void 0);
 exports.BudgetAllocationInput = BudgetAllocationInput = __decorate([
@@ -749,7 +758,7 @@ __decorate([
     __metadata("design:type", Date)
 ], CreateBudgetPlanInput.prototype, "endDate", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], CreateBudgetPlanInput.prototype, "description", void 0);
 __decorate([

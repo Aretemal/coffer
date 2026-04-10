@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
+const client_1 = require("@prisma/client");
 const bcrypt = require("bcrypt");
 const prisma_service_1 = require("../prisma/prisma.service");
 let AuthService = class AuthService {
@@ -21,12 +22,21 @@ let AuthService = class AuthService {
     }
     async register(email, password, name) {
         const passwordHash = await bcrypt.hash(password, 10);
-        const user = await this.prisma.user.create({
-            data: { email: email.toLowerCase(), passwordHash, name },
-            select: { id: true, email: true, name: true },
-        });
-        const accessToken = this.jwt.sign({ sub: user.id, email: user.email });
-        return { accessToken, user };
+        try {
+            const user = await this.prisma.user.create({
+                data: { email: email.toLowerCase(), passwordHash, name },
+                select: { id: true, email: true, name: true },
+            });
+            const accessToken = this.jwt.sign({ sub: user.id, email: user.email });
+            return { accessToken, user };
+        }
+        catch (e) {
+            if (e instanceof client_1.Prisma.PrismaClientKnownRequestError &&
+                e.code === 'P2002') {
+                throw new common_1.ConflictException('Email уже зарегистрирован');
+            }
+            throw e;
+        }
     }
     async login(email, password) {
         const user = await this.prisma.user.findUnique({
