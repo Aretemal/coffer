@@ -383,6 +383,10 @@ __decorate([
     (0, graphql_1.Field)(() => graphql_1.Float),
     __metadata("design:type", Number)
 ], MonthlyIncomePlanGql.prototype, "plannedAmount", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String, { nullable: true }),
+    __metadata("design:type", Object)
+], MonthlyIncomePlanGql.prototype, "description", void 0);
 exports.MonthlyIncomePlanGql = MonthlyIncomePlanGql = __decorate([
     (0, graphql_1.ObjectType)()
 ], MonthlyIncomePlanGql);
@@ -401,6 +405,10 @@ __decorate([
     (0, graphql_1.Field)(() => graphql_1.Float),
     __metadata("design:type", Number)
 ], SetMonthlyIncomePlanInput.prototype, "plannedAmount", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String, { nullable: true }),
+    __metadata("design:type", String)
+], SetMonthlyIncomePlanInput.prototype, "description", void 0);
 exports.SetMonthlyIncomePlanInput = SetMonthlyIncomePlanInput = __decorate([
     (0, graphql_1.InputType)()
 ], SetMonthlyIncomePlanInput);

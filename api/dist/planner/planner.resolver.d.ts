@@ -94,9 +94,9 @@ export declare class PlannerResolver {
         }[];
         id: string;
         type: import(".prisma/client").$Enums.BudgetPeriodType;
+        description: string | null;
         startDate: Date;
         endDate: Date;
-        description: string | null;
         userId: string;
     }[]>;
     createBudgetPlan(auth: AuthUser, input: CreateBudgetPlanInput): Promise<{
@@ -109,9 +109,9 @@ export declare class PlannerResolver {
         }[];
         id: string;
         type: import(".prisma/client").$Enums.BudgetPeriodType;
+        description: string | null;
         startDate: Date;
         endDate: Date;
-        description: string | null;
         userId: string;
     }>;
     deleteBudgetPlan(auth: AuthUser, id: string): Promise<boolean>;

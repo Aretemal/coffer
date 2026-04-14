@@ -190,6 +190,7 @@ type MoneySummaryGql {
 }
 
 type MonthlyIncomePlanGql {
+  description: String
   id: ID!
   month: Int!
   plannedAmount: Float!
@@ -273,6 +274,7 @@ input RenameItemListInput {
 }
 
 input SetMonthlyIncomePlanInput {
+  description: String
   month: Int!
   plannedAmount: Float!
   year: Int!

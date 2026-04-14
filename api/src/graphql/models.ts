@@ -160,6 +160,7 @@ export class MonthlyIncomePlanGql {
   @Field(() => Int) year: number;
   @Field(() => Int) month: number;
   @Field(() => Float) plannedAmount: number;
+  @Field(() => String, { nullable: true }) description?: string | null;
 }
 
 @InputType()
@@ -167,6 +168,7 @@ export class SetMonthlyIncomePlanInput {
   @Field(() => Int) year: number;
   @Field(() => Int) month: number;
   @Field(() => Float) plannedAmount: number;
+  @Field(() => String, { nullable: true }) description?: string;
 }
 
 @ObjectType()

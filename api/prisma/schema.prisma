@@ -92,6 +92,7 @@ model MonthlyIncomePlan {
   year          Int
   month         Int
   plannedAmount Decimal @db.Decimal(14, 2)
+  description   String?
   user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, year, month])

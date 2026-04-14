@@ -98,11 +98,13 @@ export declare class MonthlyIncomePlanGql {
     year: number;
     month: number;
     plannedAmount: number;
+    description?: string | null;
 }
 export declare class SetMonthlyIncomePlanInput {
     year: number;
     month: number;
     plannedAmount: number;
+    description?: string;
 }
 export declare class WeeklyExpensePlanGql {
     id: string;

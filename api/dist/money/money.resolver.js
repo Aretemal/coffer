@@ -221,8 +221,12 @@ let MoneyResolver = class MoneyResolver {
                 year: input.year,
                 month: input.month,
                 plannedAmount: input.plannedAmount,
+                description: input.description,
             },
-            update: { plannedAmount: input.plannedAmount },
+            update: {
+                plannedAmount: input.plannedAmount,
+                ...(input.description !== undefined ? { description: input.description } : {}),
+            },
         });
         return { ...row, plannedAmount: toNum(row.plannedAmount) };
     }
